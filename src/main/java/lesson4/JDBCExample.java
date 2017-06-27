@@ -1,7 +1,7 @@
 package lesson4;
 
-import java.sql.DriverManager;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JDBCExample {
