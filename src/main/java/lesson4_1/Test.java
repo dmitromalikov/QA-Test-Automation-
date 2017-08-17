@@ -80,18 +80,32 @@ public class Test {
 	    	String actionToDo = actionToDoMap.get(i);
 	    	String expectedResult = expectedResultMap.get(i);
 	
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet result = null;
-        String resultString = "";
-        try {
-            Class.forName(DATABASE_DRIVER);
-            connection = DriverManager.getConnection(databaseURL, username, password);
-            statement = connection.createStatement();
-            result = statement.executeQuery(actionToDo);
-            while (result.next()) {
-            	resultString = result.getString(1);
-            }
+	    	Connection connection = null;
+	    	Statement statement = null;
+	    	ResultSet result = null;
+	    	String resultString = "";
+	    	try {
+	    		Class.forName(DATABASE_DRIVER);
+	    		connection = DriverManager.getConnection(databaseURL, username, password);
+	    		statement = connection.createStatement();
+	    		result = statement.executeQuery(actionToDo);
+	    		
+	    		// Count the number of rows as a resultSet
+	    		if(result.next()) {
+	    		int quantity = 1;
+	    		while (result.next()) {
+	    			quantity ++;
+	    		}
+	    		result.first();
+//	   			System.out.println("Quantity = "+ quantity);	
+    			resultString = result.getString(1);  		
+	   			if (quantity > 1) {
+	    		while (result.next()) {
+	    			resultString = resultString + ";" + result.getString(1);
+	    		}
+	   			}
+	   			}
+//   			System.out.println(resultString);
 			actualResultMap.put(i, resultString); 
 //          if (resultString.equals(expectedResult)) {
             if (resultString.hashCode() == expectedResult.hashCode()) {
